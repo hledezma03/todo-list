@@ -1,3 +1,5 @@
+import './style.css';
+
 const createTodo = (
   title,
   description,
@@ -49,26 +51,3 @@ const createProject = (name) => {
     getTodos,
   };
 };
-
-const sampleProject = createProject("Sample Project");
-const todo1 = createTodo(
-  "Sample Todo",
-  "This is a sample todo item.",
-  "2024-12-31",
-  "High",
-);
-const todo2 = createTodo(
-  "Another Todo",
-  "This is another todo item.",
-  "2024-11-30",
-  "Medium",
-  true,
-);
-
-sampleProject.addTodo(todo1);
-sampleProject.addTodo(todo2);
-sampleProject.getTodos();
-todo1.toggleStatus();
-sampleProject.getTodos();
-sampleProject.removeTodo(1);
-sampleProject.getTodos();
