@@ -1,24 +1,52 @@
 import "./style.css";
 
-const createTodo = (title, descripction, dueDate, priority, checklist = false) => {
+const createTodo = (
+  title,
+  descripction,
+  dueDate,
+  priority,
+  checklist = false,
+) => {
   return {
     title,
     descripction,
     dueDate,
-    priority, 
-    checklist,
-    showTodo() {
-      console.log(`${title}`)
-      console.log(`${descripction}`)
-      console.log(`${dueDate}`)
-      console.log(`${priority}`)
-      console.log(`${checklist}`)
+    priority,
+    // checklist,
+    // showTodo() {
+    //   console.log(`${title}`);
+    //   console.log(`${descripction}`);
+    //   console.log(`${dueDate}`);
+    //   console.log(`${priority}`);
+    //   console.log(`${checklist}`);
+    // },
+  };
+};
+
+const createProject = (name) => {
+  let todosList = [];
+  return {
+    name,
+    addTodo(title, descripction, dueDate, priority) {
+      todosList.push(createTodo(title, descripction, dueDate, priority));
+    },
+    deleteTodo(title) {
+      todosList = todosList.filter((todo) => todo.title !== title);
+    },
+    showTodos() {
+      console.log(todosList)
     }
-  }
-}
+  };
+};
 
-const todo1 = createTodo('Meditate', 'Meditate 5 minutes every day', '2026/02/13', 'High', 'False')
-const todo2 = createTodo('Study', 'Study 90 minutes every day', '2026/02/13', 'High', 'True')
+const study = createProject('study');
+const gym = createProject('gym');
 
-todo1.showTodo()
-todo2.showTodo()
+study.addTodo("coding", "code for 90 min", "today", "high");
+study.addTodo("learning", "reading a new topic for 30min", "today", "medium");
+gym.addTodo("beck press", "4 x 12", "today", "low");
+
+study.showTodos()
+gym.showTodos()
+study.deleteTodo('learning')
+study.showTodos()
