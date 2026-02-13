@@ -1,53 +1,24 @@
-import './style.css';
+import "./style.css";
 
-const createTodo = (
-  title,
-  description,
-  dueDate,
-  priority,
-  checklist = false,
-) => {
-  let completed = checklist;
-
-  const toggleStatus = () => {
-    completed = !completed;
-    console.log(`Task "${title}" is now ${completed ? "DONE" : "PENDING"}.`);
-  };
-  const getStatus = () => completed;
-
+const createTodo = (title, descripction, dueDate, priority, checklist = false) => {
   return {
     title,
-    description,
+    descripction,
     dueDate,
-    priority,
-    toggleStatus,
-    getStatus,
-  };
-};
+    priority, 
+    checklist,
+    showTodo() {
+      console.log(`${title}`)
+      console.log(`${descripction}`)
+      console.log(`${dueDate}`)
+      console.log(`${priority}`)
+      console.log(`${checklist}`)
+    }
+  }
+}
 
-const createProject = (name) => {
-  let todos = [];
+const todo1 = createTodo('Meditate', 'Meditate 5 minutes every day', '2026/02/13', 'High', 'False')
+const todo2 = createTodo('Study', 'Study 90 minutes every day', '2026/02/13', 'High', 'True')
 
-  const getName = () => name;
-  const addTodo = (todo) => {
-    todos.push(todo);
-    console.log(`Todo "${todo.title}" added to project "${name}".`);
-  };
-  const removeTodo = (index) => {
-    todos.splice(index, 1);
-    console.log(`Todo at index ${index} removed from project "${name}".`);
-  };
-  const getTodos = () => {
-    console.log(`Todos in project "${name}":`);
-    todos.forEach((todo, index) => {
-        console.log(`${index}. [${todo.getStatus() ? "x" : " "}] ${todo.title} - Due: ${todo.dueDate} - Priority: ${todo.priority}`);
-    }) 
-  };
-
-  return {
-    getName,
-    addTodo,
-    removeTodo,
-    getTodos,
-  };
-};
+todo1.showTodo()
+todo2.showTodo()
