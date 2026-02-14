@@ -1,52 +1,82 @@
 import "./style.css";
 
-const createTodo = (
+const createTodo = ({
   title,
-  descripction,
+  description,
+  dueDate,
+  priority = "low",
+  checklist = false,
+}) => ({
+  title,
+  description,
   dueDate,
   priority,
-  checklist = false,
-) => {
-  return {
-    title,
-    descripction,
-    dueDate,
-    priority,
-    // checklist,
-    // showTodo() {
-    //   console.log(`${title}`);
-    //   console.log(`${descripction}`);
-    //   console.log(`${dueDate}`);
-    //   console.log(`${priority}`);
-    //   console.log(`${checklist}`);
-    // },
-  };
-};
+  checklist,
+});
 
 const createProject = (name) => {
   let todosList = [];
   return {
     name,
-    addTodo(title, descripction, dueDate, priority) {
-      todosList.push(createTodo(title, descripction, dueDate, priority));
+    addTodo(todoData) {
+      todosList.push(createTodo(todoData));
     },
     deleteTodo(title) {
       todosList = todosList.filter((todo) => todo.title !== title);
     },
     showTodos() {
-      console.log(todosList)
-    }
+      console.log(todosList);
+    },
   };
 };
 
-const study = createProject('study');
-const gym = createProject('gym');
+const todoApp = () => {
+  let projects = [];
+  if (projects.length === 0) {
+    projects.push(createProject("default"));
+  }
 
-study.addTodo("coding", "code for 90 min", "today", "high");
-study.addTodo("learning", "reading a new topic for 30min", "today", "medium");
-gym.addTodo("beck press", "4 x 12", "today", "low");
+  return {
+    showProjects() {
+      console.log(projects);
+    },
+    addProject(name) {
+      const newProject = createProject(name);
+      projects.push(newProject);
+      return newProject;
+    },
+    getProject(name) {
+      return projects.find(elem => elem.name === name)
+    },
+    deleteProject(name) {
+      projects = projects.filter((project) => project.name !== name);
+    },
+  };
+};
+const myApp = todoApp();
+const study = myApp.addProject("study");
+const gym = myApp.addProject("gym");
 
-study.showTodos()
-gym.showTodos()
-study.deleteTodo('learning')
-study.showTodos()
+study.addTodo({
+  title: "coding",
+  description: "code for 90 min",
+  dueDate: "today",
+  priority: "high",
+});
+study.addTodo({
+  title: "learning",
+  description: "reading a new topic for 30min",
+  dueDate: "today",
+  priority: "medium",
+});
+gym.addTodo({ title: "beck press", description: "4 x 12", dueDate: "today" });
+
+study.showTodos();
+gym.showTodos();
+study.deleteTodo("learning");
+study.showTodos();
+myApp.showProjects();
+myApp.getProject("default").addTodo({ title: "Master JS Logic" });
+myApp.getProject("default").showTodos();
+myApp.showProjects();
+
