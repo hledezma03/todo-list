@@ -1,4 +1,4 @@
- /* body {
+ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -13,10 +13,15 @@
     padding: 15px;
  }
 
- .todo-sidebar {
+ .sidebar-container {
     background-color: #333;
     color: #fff;
     padding: 15px;
+ }
+
+ .sidebar-title {
+   font-size: 24px;
+   margin-bottom: 12px;
  }
 
  #add-project-btn {
@@ -42,4 +47,4 @@
     position: fixed;    
     bottom: 15px;
     right: 15px;
- } */
+ }

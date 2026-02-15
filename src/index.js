@@ -1,5 +1,5 @@
 import "./style.css";
-
+//Create todo
 const createTodo = ({
   title,
   description,
@@ -13,10 +13,12 @@ const createTodo = ({
   priority,
   checklist,
 });
-
+//Create project
 const createProject = (name) => {
+  const id = Date.now() + Math.random();
   let todosList = [];
   return {
+    id,
     name,
     addTodo(todoData) {
       todosList.push(createTodo(todoData));
@@ -24,59 +26,68 @@ const createProject = (name) => {
     deleteTodo(title) {
       todosList = todosList.filter((todo) => todo.title !== title);
     },
-    showTodos() {
-      console.log(todosList);
+    getTodos() {
+      return todosList;
     },
   };
 };
 
+//Display Controller
+const displayController = (onProjectSelect) => {
+  //Get the projects container
+  const projectListContainer = document.getElementById("project-list");
+  //Event to know when a project has been clicked
+  projectListContainer.addEventListener("click", (e) => {
+    if (e.target.tagName === "LI") {
+      onProjectSelect(e.target.dataset.index);
+    }
+  });
+  return {
+    renderProject(projectsArray) {
+      //Clean the screen
+      projectListContainer.innerHTML = "";
+      projectsArray.forEach((project, i) => {
+        //Create project element
+        const projectElement = document.createElement("li");
+        projectElement.textContent = project.name;
+        projectElement.dataset.index = i;
+        //Add the project to the projectListContainer
+        projectListContainer.appendChild(projectElement);
+      });
+    },
+  };
+};
+
+//Main controller
 const todoApp = () => {
   let projects = [];
+  let currentProject = null;
+  //Create default project if there are no projects
   if (projects.length === 0) {
     projects.push(createProject("default"));
   }
 
   return {
-    showProjects() {
-      console.log(projects);
-    },
     addProject(name) {
       const newProject = createProject(name);
       projects.push(newProject);
       return newProject;
     },
-    getProject(name) {
-      return projects.find(elem => elem.name === name)
+    getProjects(name) {
+      return projects;
     },
     deleteProject(name) {
       projects = projects.filter((project) => project.name !== name);
     },
+    onProjectClick(projectId) {
+      currentProject = projectId;
+    },
   };
 };
+
 const myApp = todoApp();
-const study = myApp.addProject("study");
-const gym = myApp.addProject("gym");
-
-study.addTodo({
-  title: "coding",
-  description: "code for 90 min",
-  dueDate: "today",
-  priority: "high",
-});
-study.addTodo({
-  title: "learning",
-  description: "reading a new topic for 30min",
-  dueDate: "today",
-  priority: "medium",
-});
-gym.addTodo({ title: "beck press", description: "4 x 12", dueDate: "today" });
-
-study.showTodos();
-gym.showTodos();
-study.deleteTodo("learning");
-study.showTodos();
-myApp.showProjects();
-myApp.getProject("default").addTodo({ title: "Master JS Logic" });
-myApp.getProject("default").showTodos();
-myApp.showProjects();
-
+const myDisplay = displayController(myApp.onProjectClick);
+myDisplay.renderProject(myApp.getProjects());
+myApp.addProject('gym')
+myApp.addProject('study')
+myDisplay.renderProject(myApp.getProjects());
