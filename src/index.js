@@ -71,15 +71,24 @@ const displayController = (actions) => {
   });
 
   return {
-    renderProject(projectsArray) {
+    renderProject(projectsArray, activeIndex) {
       //Clean the screen
       projectListContainer.innerHTML = "";
+
+      const projectTitleDisplay = document.getElementById("project-title");
+      if (projectTitleDisplay && projectsArray[activeIndex]) {
+        projectTitleDisplay.textContent = projectsArray[activeIndex].name;
+      }
+
       projectsArray.forEach((project, i) => {
         //Create project element
         const projectElement = document.createElement("li");
         projectElement.textContent = project.name;
         projectElement.dataset.index = i;
         //Add the project to the projectListContainer
+        if (i === Number(activeIndex)) {
+          projectElement.classList.add("active-project")
+        }
         projectListContainer.appendChild(projectElement);
       });
     },
@@ -89,16 +98,17 @@ const displayController = (actions) => {
 //Main controller
 const todoApp = () => {
   let projects = [];
-  let currentProject = null;
+  let currentProjectIndex = 0;
   //Create default project if there are no projects
   if (projects.length === 0) {
-    projects.push(createProject("default"));
+    projects.push(createProject("Default"));
   }
 
   return {
     addProject(name) {
       const newProject = createProject(name);
       projects.push(newProject);
+      currentProjectIndex = projects.length - 1;
       return newProject;
     },
     getProjects() {
@@ -108,8 +118,10 @@ const todoApp = () => {
       projects = projects.filter((project) => project.name !== name);
     },
     onProjectClick(index) {
-      currentProject = index;
-      console.log("Selected project index:", currentProject);
+      currentProjectIndex = index;
+    },
+    getCurrentProjectIndex() {
+      return currentProjectIndex;
     },
   };
 };
@@ -129,10 +141,12 @@ const initApp = () => {
     },
   };
 
-  const myDisplay = displayController(actions)
+  const myDisplay = displayController(actions);
 
   const refreshUI = () => {
-    myDisplay.renderProject(myApp.getProjects());
+    const projects = myApp.getProjects();
+    const activeIndex = myApp.getCurrentProjectIndex()
+    myDisplay.renderProject(projects, activeIndex);
   };
 
   refreshUI();
