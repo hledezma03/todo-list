@@ -1,4 +1,5 @@
 import "./style.css";
+
 //Create todo
 const createTodo = ({
   title,
@@ -13,6 +14,7 @@ const createTodo = ({
   priority,
   checklist,
 });
+
 //Create project
 const createProject = (name) => {
   const id = Date.now() + Math.random();
@@ -33,15 +35,41 @@ const createProject = (name) => {
 };
 
 //Display Controller
-const displayController = (onProjectSelect) => {
-  //Get the projects container
+const displayController = (actions) => {
   const projectListContainer = document.getElementById("project-list");
-  //Event to know when a project has been clicked
-  projectListContainer.addEventListener("click", (e) => {
-    if (e.target.tagName === "LI") {
-      onProjectSelect(e.target.dataset.index);
+  const projectDialog = document.getElementById("project-dialog");
+  const projectForm = document.getElementById("project-form");
+  const createProjectBtn = document.getElementById("add-project-btn");
+  const closeProjectFormBtn = document.getElementById("close-project-form-btn");
+
+  //Create project dialog
+  createProjectBtn.addEventListener("click", () => projectDialog.showModal());
+
+  //CLose project dialog
+  closeProjectFormBtn.addEventListener("click", () => {
+    projectForm.reset();
+    projectDialog.close();
+  });
+
+  //Submit a project form
+  projectForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const projectNameInput = document.getElementById("project-name");
+
+    if (projectNameInput.value.trim() !== "") {
+      actions.addProject(projectNameInput.value);
+      projectForm.reset();
+      projectDialog.close();
     }
   });
+
+  //Select project
+  projectListContainer.addEventListener("click", (e) => {
+    if (e.target.tagName === "LI") {
+      actions.selectProject(e.target.dataset.index);
+    }
+  });
+
   return {
     renderProject(projectsArray) {
       //Clean the screen
@@ -73,21 +101,41 @@ const todoApp = () => {
       projects.push(newProject);
       return newProject;
     },
-    getProjects(name) {
+    getProjects() {
       return projects;
     },
     deleteProject(name) {
       projects = projects.filter((project) => project.name !== name);
     },
-    onProjectClick(projectId) {
-      currentProject = projectId;
+    onProjectClick(index) {
+      currentProject = index;
+      console.log("Selected project index:", currentProject);
     },
   };
 };
 
-const myApp = todoApp();
-const myDisplay = displayController(myApp.onProjectClick);
-myDisplay.renderProject(myApp.getProjects());
-myApp.addProject('gym')
-myApp.addProject('study')
-myDisplay.renderProject(myApp.getProjects());
+const initApp = () => {
+  const myApp = todoApp();
+
+  //All the possible interactions
+  const actions = {
+    addProject: (name) => {
+      myApp.addProject(name);
+      refreshUI();
+    },
+    selectProject: (index) => {
+      myApp.onProjectClick(index);
+      refreshUI();
+    },
+  };
+
+  const myDisplay = displayController(actions)
+
+  const refreshUI = () => {
+    myDisplay.renderProject(myApp.getProjects());
+  };
+
+  refreshUI();
+};
+
+initApp();

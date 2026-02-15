@@ -23,6 +23,19 @@
       <ul id="project-list"></ul>
       <button id="add-project-btn">Add Project</button>
     </aside>
+
+
+    <dialog id="project-dialog">
+      <h2>Create a new project</h2>
+      <form method="dialog" id="project-form">
+        <label for="project-name">Name of the project</label>
+        <input id="project-name" type="text">
+        <section class="project-form-buttons">
+          <input type="submit" id="create-project-btn">
+          <button type="button" id="close-project-form-btn">Cancel</button>
+        </section>
+      </form>
+    </dialog>
     <script src="index.js"></script>
   </body>
 </html>
