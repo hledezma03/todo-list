@@ -93,11 +93,47 @@ ul {
 }
 
 li {
-   margin: 8px;
-   padding: 8px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 10px 15px;
+   border-radius: 4px;
+   margin: 4px 8px;
+}
+
+li p {
+   margin: 0;
 }
 
 li:hover {
    cursor: pointer;
    background-color: #444;
+}
+
+.delete-project-btn {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ padding: 5px;
+ background-color: transparent;
+ border: none;
+ border-radius: 6px;
+ color: #9ca3af;
+ cursor: pointer;
+}
+
+li:hover .delete-project-btn {
+   opacity: 1;
+}
+
+.delete-project-btn:hover {
+   background-color: rgba(239, 68, 68, 0.1);
+   color: #ef4444;
+   border-radius: 4px;
+}
+
+.delete-project-btn svg {
+   width: 18px;
+   height: 18px;
+   pointer-events: none;
 }

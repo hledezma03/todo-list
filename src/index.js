@@ -1,4 +1,5 @@
 import "./style.css";
+import trashIcon from "./assets/trash-2.svg";
 
 //Create todo
 const createTodo = ({
@@ -83,12 +84,22 @@ const displayController = (actions) => {
       projectsArray.forEach((project, i) => {
         //Create project element
         const projectElement = document.createElement("li");
-        projectElement.textContent = project.name;
+        const projectName = document.createElement("p");
+        const deleteProjectBtn = document.createElement("button");
+        deleteProjectBtn.classList.add("delete-project-btn");
+        const icon = document.createElement("img");
+        icon.src = trashIcon;
+        icon.classList.add("trash-icon");
+
+        projectName.textContent = project.name;
         projectElement.dataset.index = i;
         //Add the project to the projectListContainer
         if (i === Number(activeIndex)) {
-          projectElement.classList.add("active-project")
+          projectElement.classList.add("active-project");
         }
+        deleteProjectBtn.appendChild(icon)
+        projectElement.appendChild(projectName);
+        projectElement.appendChild(deleteProjectBtn);
         projectListContainer.appendChild(projectElement);
       });
     },
@@ -114,8 +125,8 @@ const todoApp = () => {
     getProjects() {
       return projects;
     },
-    deleteProject(name) {
-      projects = projects.filter((project) => project.name !== name);
+    deleteProject(index) {
+      projects = projects.filter((project) => project.id !== index);
     },
     onProjectClick(index) {
       currentProjectIndex = index;
@@ -139,13 +150,17 @@ const initApp = () => {
       myApp.onProjectClick(index);
       refreshUI();
     },
+    deleteProject(index) {
+      myApp.deleteProject(index);
+      refreshUI();
+    },
   };
 
   const myDisplay = displayController(actions);
 
   const refreshUI = () => {
     const projects = myApp.getProjects();
-    const activeIndex = myApp.getCurrentProjectIndex()
+    const activeIndex = myApp.getCurrentProjectIndex();
     myDisplay.renderProject(projects, activeIndex);
   };
 
