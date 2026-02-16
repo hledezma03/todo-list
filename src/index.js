@@ -87,6 +87,13 @@ const displayController = (actions) => {
         const projectName = document.createElement("p");
         const deleteProjectBtn = document.createElement("button");
         deleteProjectBtn.classList.add("delete-project-btn");
+
+        //Event for deleting the project
+        deleteProjectBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          actions.deleteProject(project.id);
+        });
+        //Trash icon
         const icon = document.createElement("img");
         icon.src = trashIcon;
         icon.classList.add("trash-icon");
@@ -97,7 +104,8 @@ const displayController = (actions) => {
         if (i === Number(activeIndex)) {
           projectElement.classList.add("active-project");
         }
-        deleteProjectBtn.appendChild(icon)
+        //Appending elements
+        deleteProjectBtn.appendChild(icon);
         projectElement.appendChild(projectName);
         projectElement.appendChild(deleteProjectBtn);
         projectListContainer.appendChild(projectElement);
@@ -125,8 +133,12 @@ const todoApp = () => {
     getProjects() {
       return projects;
     },
-    deleteProject(index) {
-      projects = projects.filter((project) => project.id !== index);
+    deleteProject(id) {
+      projects = projects.filter((project) => project.id !== id);
+
+      if (currentProjectIndex >= projects.length) {
+        currentProjectIndex = Math.max(0, projects.length - 1);
+      }
     },
     onProjectClick(index) {
       currentProjectIndex = index;
@@ -150,8 +162,8 @@ const initApp = () => {
       myApp.onProjectClick(index);
       refreshUI();
     },
-    deleteProject(index) {
-      myApp.deleteProject(index);
+    deleteProject(id) {
+      myApp.deleteProject(id);
       refreshUI();
     },
   };
