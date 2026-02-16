@@ -64,26 +64,27 @@ const displayController = (actions) => {
     }
   });
 
-  //Select project
-  projectListContainer.addEventListener("click", (e) => {
-    if (e.target.tagName === "LI") {
-      actions.selectProject(e.target.dataset.index);
-    }
-  });
-
   return {
-    renderProject(projectsArray, activeIndex) {
+    renderProject(projectsArray, activeId) {
       //Clean the screen
       projectListContainer.innerHTML = "";
 
+      const activeProject = projectsArray.find((p) => p.id === activeId);
       const projectTitleDisplay = document.getElementById("project-title");
-      if (projectTitleDisplay && projectsArray[activeIndex]) {
-        projectTitleDisplay.textContent = projectsArray[activeIndex].name;
+      if (projectTitleDisplay && activeProject) {
+        projectTitleDisplay.textContent = activeProject.name;
       }
 
-      projectsArray.forEach((project, i) => {
+      projectsArray.forEach((project) => {
         //Create project element
         const projectElement = document.createElement("li");
+        projectElement.addEventListener("click", () => {
+          actions.selectProject(project.id);
+        });
+
+        if (project.id === activeId) {
+          projectElement.classList.add("active-project");
+        }
         const projectName = document.createElement("p");
         const deleteProjectBtn = document.createElement("button");
         deleteProjectBtn.classList.add("delete-project-btn");
@@ -99,11 +100,6 @@ const displayController = (actions) => {
         icon.classList.add("trash-icon");
 
         projectName.textContent = project.name;
-        projectElement.dataset.index = i;
-        //Add the project to the projectListContainer
-        if (i === Number(activeIndex)) {
-          projectElement.classList.add("active-project");
-        }
         //Appending elements
         deleteProjectBtn.appendChild(icon);
         projectElement.appendChild(projectName);
@@ -117,17 +113,16 @@ const displayController = (actions) => {
 //Main controller
 const todoApp = () => {
   let projects = [];
-  let currentProjectIndex = 0;
-  //Create default project if there are no projects
-  if (projects.length === 0) {
-    projects.push(createProject("Default"));
-  }
+  //Create default project
+  const defaultProject = createProject("Default");
+  projects.push(defaultProject);
+  let currentProjectId = defaultProject.id;
 
   return {
     addProject(name) {
       const newProject = createProject(name);
       projects.push(newProject);
-      currentProjectIndex = projects.length - 1;
+      currentProjectId = newProject.id;
       return newProject;
     },
     getProjects() {
@@ -136,15 +131,15 @@ const todoApp = () => {
     deleteProject(id) {
       projects = projects.filter((project) => project.id !== id);
 
-      if (currentProjectIndex >= projects.length) {
-        currentProjectIndex = Math.max(0, projects.length - 1);
+      if (currentProjectId === id && projects.length > 0) {
+        currentProjectId = projects[projects.length - 1].id;
       }
     },
-    onProjectClick(index) {
-      currentProjectIndex = index;
+    onProjectClick(id) {
+      currentProjectId = id;
     },
-    getCurrentProjectIndex() {
-      return currentProjectIndex;
+    getCurrentProjectId() {
+      return currentProjectId;
     },
   };
 };
@@ -158,8 +153,8 @@ const initApp = () => {
       myApp.addProject(name);
       refreshUI();
     },
-    selectProject: (index) => {
-      myApp.onProjectClick(index);
+    selectProject: (id) => {
+      myApp.onProjectClick(id);
       refreshUI();
     },
     deleteProject(id) {
@@ -172,8 +167,8 @@ const initApp = () => {
 
   const refreshUI = () => {
     const projects = myApp.getProjects();
-    const activeIndex = myApp.getCurrentProjectIndex();
-    myDisplay.renderProject(projects, activeIndex);
+    const activeId = myApp.getCurrentProjectId();
+    myDisplay.renderProject(projects, activeId);
   };
 
   refreshUI();
