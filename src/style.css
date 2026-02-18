@@ -166,3 +166,89 @@ li:hover .delete-project-btn {
 .trash-icon {
    pointer-events: none;
 }
+
+
+#todo-dialog {
+   border: none;
+   border-radius: 12px;
+   padding: 24px;
+   width: 400px;
+   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+#todo-dialog::backdrop {
+   background-color: rgba(0, 0, 0, 0.5);
+   backdrop-filter: blur(2px);
+}
+
+#todo-dialog h2 {
+   margin-top: 0;
+   color: #333;
+   font-size: 1.5rem;
+   border-bottom: 2px solid #eee;
+   padding-bottom: 10px;
+}
+
+#todo-form {
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+}
+
+#todo-form label {
+   font-size: 0.8rem;
+   font-weight: bold;
+   color: #666;
+   margin-bottom: -10px;
+}
+
+#todo-form input,
+#todo-form textarea,
+#todo-form select {
+   padding: 10px;
+   border: 1px solid #ddd;
+   border-radius: 6px;
+   font-family: inherit;
+   font-size: 1rem;
+   width: 100%;
+   box-sizing: border-box;
+}
+
+#todo-description {
+   resize: vertical;
+   min-height: 80px;
+}
+
+.project-form-buttons {
+   display: flex;
+   justify-content: space-between;
+   gap: 10px;
+   margin-top: 10px;
+}
+
+#create-todo-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#close-todo-form-btn {
+  background-color: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#create-todo-btn:hover { background-color: #218838; }
+#close-todo-form-btn:hover { background-color: #e2e6ea; }
+
+
+
+
+
