@@ -37,6 +37,43 @@ const createProject = (name) => {
   };
 };
 
+//Main controller
+const todoApp = () => {
+  let projects = [];
+  //Create default project
+  const defaultProject = createProject("Default");
+  projects.push(defaultProject);
+  let currentProject = defaultProject;
+
+  return {
+    addProject(name) {
+      const newProject = createProject(name);
+      projects.push(newProject);
+      currentProject = newProject;
+      return currentProject;
+    },
+    getProjects() {
+      return projects;
+    },
+    deleteProject(id) {
+      projects = projects.filter((project) => project.id !== id);
+
+      if (currentProject.id === id && projects.length > 0) {
+        currentProject.id = projects[projects.length - 1].id;
+      }
+    },
+    onProjectClick(id) {
+      currentProject.id = id;
+    },
+    getCurrentProject() {
+      return currentProject;
+    },
+    addTodoToCurrentProject(todoData) {
+      return currentProject.addTodo(todoData);
+    },
+  };
+};
+
 //Display Controller
 const displayController = (actions) => {
   const projectListContainer = document.getElementById("project-list");
@@ -44,6 +81,7 @@ const displayController = (actions) => {
   const projectForm = document.getElementById("project-form");
   const createProjectBtn = document.getElementById("add-project-btn");
   const closeProjectFormBtn = document.getElementById("close-project-form-btn");
+  const todoListContainer = document.getElementById("todo-list");
   const addTodoBtn = document.getElementById("add-todo-btn");
   const todoDialog = document.getElementById("todo-dialog");
   const todoForm = document.getElementById("todo-form");
@@ -77,6 +115,26 @@ const displayController = (actions) => {
   closeTodoFormBtn.addEventListener("click", () => {
     todoForm.reset();
     todoDialog.close();
+  });
+
+  //Submit a todo form
+  todoForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const todoTitleInput = document.getElementById("todo-title");
+    const todoDescriptionInput = document.getElementById("todo-description");
+    const todoDateInput = document.getElementById("todo-date");
+    const todoPriorityInput = document.getElementById("todo-priority");
+
+    if (todoTitleInput.value.trim() !== "") {
+      actions.addTodo({
+        title: todoTitleInput.value,
+        description: todoDescriptionInput.value,
+        date: todoDateInput.value,
+        priority: todoPriorityInput.value,
+      });
+      todoForm.reset();
+      todoDialog.close();
+    }
   });
 
   return {
@@ -122,39 +180,42 @@ const displayController = (actions) => {
         projectListContainer.appendChild(projectElement);
       });
     },
-  };
-};
+    renderTodos(currentProjectTodos) {
+      todoListContainer.innerHTML = "";
 
-//Main controller
-const todoApp = () => {
-  let projects = [];
-  //Create default project
-  const defaultProject = createProject("Default");
-  projects.push(defaultProject);
-  let currentProjectId = defaultProject.id;
+      currentProjectTodos.forEach((todo) => {
+        //Create todo container
+        const todoContainer = document.createElement("div");
 
-  return {
-    addProject(name) {
-      const newProject = createProject(name);
-      projects.push(newProject);
-      currentProjectId = newProject.id;
-      return newProject;
-    },
-    getProjects() {
-      return projects;
-    },
-    deleteProject(id) {
-      projects = projects.filter((project) => project.id !== id);
+        const todoTitle = document.createElement("p");
+        todoTitle.textContent = todo.title
+        const todoDate = document.createElement("p");
+        todoDate.textContent = todo.date
+        const todoPriority = document.createElement("p");
+        todoPriority.textContent = todo.priority
 
-      if (currentProjectId === id && projects.length > 0) {
-        currentProjectId = projects[projects.length - 1].id;
-      }
-    },
-    onProjectClick(id) {
-      currentProjectId = id;
-    },
-    getCurrentProjectId() {
-      return currentProjectId;
+        const deleteTodoBtn = document.createElement("button");
+        deleteTodoBtn.classList.add("delete-todo-btn");
+
+        // //Event for deleting the todo
+        // deleteTodoBtn.addEventListener("click", (e) => {
+        //   e.stopPropagation();
+        //   actions.deleteProject(project.id);
+        // });
+
+        //Trash icon
+        const icon = document.createElement("img");
+        icon.src = trashIcon;
+        icon.classList.add("trash-icon");
+
+        //Appending elements
+        deleteTodoBtn.appendChild(icon);
+        todoContainer.appendChild(todoTitle);
+        todoContainer.appendChild(todoDate);
+        todoContainer.appendChild(todoPriority);
+        todoContainer.appendChild(deleteTodoBtn);
+        todoListContainer.appendChild(todoContainer);
+      });
     },
   };
 };
@@ -176,13 +237,20 @@ const initApp = () => {
       myApp.deleteProject(id);
       refreshUI();
     },
+    addTodo(todoData) {
+      myApp.addTodoToCurrentProject(todoData);
+      refreshUI();
+    },
   };
 
   const myDisplay = displayController(actions);
 
   const refreshUI = () => {
     const projects = myApp.getProjects();
-    const activeId = myApp.getCurrentProjectId();
+    const currentProject = myApp.getCurrentProject();
+    const activeId = currentProject.id;
+    const currentProjectTodos = currentProject.getTodos();
+    myDisplay.renderTodos(currentProjectTodos);
     myDisplay.renderProject(projects, activeId);
   };
 
