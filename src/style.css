@@ -141,7 +141,8 @@ li:hover {
    background-color: #444;
 }
 
-.delete-project-btn {
+.delete-project-btn,
+.delete-todo-btn {
  display: flex;
  align-items: center;
  justify-content: center;
@@ -157,7 +158,8 @@ li:hover .delete-project-btn {
    opacity: 1;
 }
 
-.delete-project-btn:hover {
+.delete-project-btn:hover,
+.delete-todo-btn:hover {
    background-color: rgba(239, 68, 68, 0.3);
    color: #ef4444;
    border-radius: 4px;
@@ -247,6 +249,18 @@ li:hover .delete-project-btn {
 
 #create-todo-btn:hover { background-color: #218838; }
 #close-todo-form-btn:hover { background-color: #e2e6ea; }
+
+#todo-list div {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 12px;
+   margin-bottom: 10px;
+   background-color: #fff;
+   border-left: 5px solid;
+   border-radius: 4px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
 
 

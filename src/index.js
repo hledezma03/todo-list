@@ -43,6 +43,7 @@ const todoApp = () => {
   //Create default project
   const defaultProject = createProject("Default");
   projects.push(defaultProject);
+
   let currentProject = defaultProject;
 
   return {
@@ -59,11 +60,11 @@ const todoApp = () => {
       projects = projects.filter((project) => project.id !== id);
 
       if (currentProject.id === id && projects.length > 0) {
-        currentProject.id = projects[projects.length - 1].id;
+        currentProject = projects[projects.length - 1];
       }
     },
     onProjectClick(id) {
-      currentProject.id = id;
+      currentProject = projects.find((project) => project.id === id);
     },
     getCurrentProject() {
       return currentProject;
@@ -129,7 +130,7 @@ const displayController = (actions) => {
       actions.addTodo({
         title: todoTitleInput.value,
         description: todoDescriptionInput.value,
-        date: todoDateInput.value,
+        dueDate: todoDateInput.value,
         priority: todoPriorityInput.value,
       });
       todoForm.reset();
@@ -188,11 +189,11 @@ const displayController = (actions) => {
         const todoContainer = document.createElement("div");
 
         const todoTitle = document.createElement("p");
-        todoTitle.textContent = todo.title
+        todoTitle.textContent = todo.title;
         const todoDate = document.createElement("p");
-        todoDate.textContent = todo.date
+        todoDate.textContent = todo.date;
         const todoPriority = document.createElement("p");
-        todoPriority.textContent = todo.priority
+        todoPriority.textContent = todo.priority;
 
         const deleteTodoBtn = document.createElement("button");
         deleteTodoBtn.classList.add("delete-todo-btn");
