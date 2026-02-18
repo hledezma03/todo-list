@@ -25,10 +25,32 @@
       <h2>Create a new project</h2>
       <form method="dialog" id="project-form">
         <label for="project-name">NAME OF THE PROJECT</label>
-        <input id="project-name" type="text">
+        <input id="project-name" type="text" placeholder="Study, Work, Coding, etc...">
         <section class="project-form-buttons">
-          <input type="submit" id="create-project-btn">
+          <input type="submit" id="create-project-btn" value="Create">
           <button type="button" id="close-project-form-btn">Cancel</button>
+        </section>
+      </form>
+    </dialog>
+
+    <dialog id="todo-dialog">
+      <h2>Create a new todo</h2>
+      <form method="dialog" id="todo-form">
+        <label for="todo-title">TODO TITLE</label>
+        <input id="todo-title" type="text" placeholder="Study code...">
+        <label for="todo-description">TODO DESCRIPTION</label>
+        <textarea name="todo-description" id="todo-description" rows="5" cols="30" placeholder="Study JavaScript for 90 minutes..."></textarea>
+        <label for="todo-date">DATE</label>
+        <input id="todo-title" type="date">
+        <label for="todo-priority">PRIORITY</label>
+        <select name="todo-priority" id="todo-priority">
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+        <section class="project-form-buttons">
+          <input type="submit" id="create-todo-btn" value="Create">
+          <button type="button" id="close-todo-form-btn">Cancel</button>
         </section>
       </form>
     </dialog>

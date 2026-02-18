@@ -3,12 +3,14 @@ import trashIcon from "./assets/trash-2.svg";
 
 //Create todo
 const createTodo = ({
+  id = Date.now() + Math.random(),
   title,
   description,
   dueDate,
   priority = "low",
   checklist = false,
 }) => ({
+  id,
   title,
   description,
   dueDate,
