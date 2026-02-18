@@ -44,6 +44,10 @@ const displayController = (actions) => {
   const projectForm = document.getElementById("project-form");
   const createProjectBtn = document.getElementById("add-project-btn");
   const closeProjectFormBtn = document.getElementById("close-project-form-btn");
+  const addTodoBtn = document.getElementById("add-todo-btn");
+  const todoDialog = document.getElementById("todo-dialog");
+  const todoForm = document.getElementById("todo-form");
+  const closeTodoFormBtn = document.getElementById("close-todo-form-btn");
 
   //Create project dialog
   createProjectBtn.addEventListener("click", () => projectDialog.showModal());
@@ -64,6 +68,15 @@ const displayController = (actions) => {
       projectForm.reset();
       projectDialog.close();
     }
+  });
+
+  //Create todo dialog
+  addTodoBtn.addEventListener("click", () => todoDialog.showModal());
+
+  //CLose todo dialog
+  closeTodoFormBtn.addEventListener("click", () => {
+    todoForm.reset();
+    todoDialog.close();
   });
 
   return {
