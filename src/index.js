@@ -117,7 +117,22 @@ const displayController = (actions) => {
   });
 
   //Create todo dialog
-  addTodoBtn.addEventListener("click", () => todoDialog.showModal());
+  addTodoBtn.addEventListener("click", () => {
+    const dateInput = document.getElementById("todo-date");
+
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const today = `${year}-${month}-${day}`;
+
+    dateInput.value = today;
+
+    dateInput.min = today;
+
+    todoDialog.showModal();
+  });
 
   //CLose todo dialog
   closeTodoFormBtn.addEventListener("click", () => {
