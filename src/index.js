@@ -28,8 +28,8 @@ const createProject = (name) => {
     addTodo(todoData) {
       todosList.push(createTodo(todoData));
     },
-    deleteTodo(title) {
-      todosList = todosList.filter((todo) => todo.title !== title);
+    deleteTodo(id) {
+      todosList = todosList.filter((todo) => todo.id !== id);
     },
     getTodos() {
       return todosList;
@@ -75,6 +75,9 @@ const todoApp = () => {
     },
     addTodoToCurrentProject(todoData) {
       return currentProject.addTodo(todoData);
+    },
+    deleteTodo(todoId) {
+      currentProject.deleteTodo(todoId);
     },
   };
 };
@@ -195,10 +198,10 @@ const displayController = (actions) => {
         const todoTitle = document.createElement("p");
         todoTitle.textContent = todo.title;
         const todoDate = document.createElement("p");
-        const dateObj = new Date(todo.dueDate)
-        todoDate.textContent = dateObj.toLocaleDateString('en-US', {
-          month: 'short',
-          day: 'numeric'
+        const dateObj = new Date(todo.dueDate);
+        todoDate.textContent = dateObj.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
         });
         const todoPriority = document.createElement("p");
         todoPriority.textContent = todo.priority;
@@ -206,11 +209,11 @@ const displayController = (actions) => {
         const deleteTodoBtn = document.createElement("button");
         deleteTodoBtn.classList.add("delete-todo-btn");
 
-        // //Event for deleting the todo
-        // deleteTodoBtn.addEventListener("click", (e) => {
-        //   e.stopPropagation();
-        //   actions.deleteProject(project.id);
-        // });
+        //Event for deleting the todo
+        deleteTodoBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          actions.deleteTodo(todo.id);
+        });
 
         //Trash icon
         const icon = document.createElement("img");
@@ -248,6 +251,10 @@ const initApp = () => {
     },
     addTodo(todoData) {
       myApp.addTodoToCurrentProject(todoData);
+      refreshUI();
+    },
+    deleteTodo(todoId) {
+      myApp.deleteTodo(todoId);
       refreshUI();
     },
   };
