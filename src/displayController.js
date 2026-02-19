@@ -127,16 +127,24 @@ export const displayController = (actions) => {
       currentProjectTodos.forEach((todo) => {
         //Create todo container
         const todoContainer = document.createElement("div");
+        todoContainer.classList.add("todo-item");
+
+        const summary = document.createElement("div");
+        summary.classList.add("todo-summary");
 
         const todoTitle = document.createElement("p");
+        todoTitle.classList.add("todo-title");
         todoTitle.textContent = todo.title;
         const todoDate = document.createElement("p");
+        todoDate.classList.add("todo-date");
         const dateObj = new Date(todo.dueDate);
         todoDate.textContent = dateObj.toLocaleDateString("en-US", {
           month: "short",
           day: "numeric",
+          timeZone: "UTC",
         });
         const todoPriority = document.createElement("p");
+        todoPriority.classList.add("todo-priority");
         todoPriority.textContent = todo.priority;
 
         const deleteTodoBtn = document.createElement("button");
@@ -153,12 +161,26 @@ export const displayController = (actions) => {
         icon.src = trashIcon;
         icon.classList.add("trash-icon");
 
+        const details = document.createElement("div");
+        details.classList.add("todo-details");
+
+        const description = document.createElement("div");
+        description.textContent =
+          todo.description || "No description provided.";
+        details.appendChild(description);
+
+        todoContainer.addEventListener("click", () => {
+          todoContainer.classList.toggle("is-expanded");
+        });
+
         //Appending elements
         deleteTodoBtn.appendChild(icon);
-        todoContainer.appendChild(todoTitle);
-        todoContainer.appendChild(todoDate);
-        todoContainer.appendChild(todoPriority);
-        todoContainer.appendChild(deleteTodoBtn);
+        summary.appendChild(todoTitle);
+        summary.appendChild(todoDate);
+        summary.appendChild(todoPriority);
+        summary.appendChild(deleteTodoBtn);
+        todoContainer.appendChild(summary);
+        todoContainer.appendChild(details);
         todoListContainer.appendChild(todoContainer);
       });
     },
