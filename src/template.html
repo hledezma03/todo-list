@@ -4,30 +4,39 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo App</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <aside class='sidebar-container'> 
-      <p class="sidebar-title">Projects</p>
-      <ul id="project-list"></ul>
-      <button id="add-project-btn">Add Project</button>
+    <aside class="sidebar">
+      <h2 class="sidebar-title">Projects</h2>
+
+      <div class="project-list-wrapper">
+        <ul id="project-list"></ul>
+      </div>
+      
+      <button id="add-project-btn" aria-label="Add Project">
+        <span>+</span>Add Project
+      </button>
     </aside>
     <main>
       <header>
         <h1 id="project-title">Todos</h1>
-        <button id="add-todo-btn">+</button>
+        <button id="add-todo-btn" aria-label="Add Todo">+</button>
       </header>
       <section id="todo-list"></section>
     </main>
-
 
     <dialog id="project-dialog">
       <h2>Create a new project</h2>
       <form method="dialog" id="project-form">
         <label for="project-name">NAME OF THE PROJECT</label>
-        <input id="project-name" type="text" placeholder="Study, Work, Coding, etc...">
+        <input
+          id="project-name"
+          type="text"
+          placeholder="Study, Work, Coding, etc..."
+        />
         <section class="project-form-buttons">
-          <input type="submit" id="create-project-btn" value="Create">
+          <input type="submit" id="create-project-btn" value="Create" />
           <button type="button" id="close-project-form-btn">Cancel</button>
         </section>
       </form>
@@ -37,11 +46,22 @@
       <h2>Create a new todo</h2>
       <form method="dialog" id="todo-form">
         <label for="todo-title">TODO TITLE</label>
-        <input id="todo-title" type="text" placeholder="Study code..." required>
+        <input
+          id="todo-title"
+          type="text"
+          placeholder="Study code..."
+          required
+        />
         <label for="todo-description">TODO DESCRIPTION</label>
-        <textarea name="todo-description" id="todo-description" rows="5" cols="30" placeholder="Study JavaScript for 90 minutes..."></textarea>
+        <textarea
+          name="todo-description"
+          id="todo-description"
+          rows="5"
+          cols="30"
+          placeholder="Study JavaScript for 90 minutes..."
+        ></textarea>
         <label for="todo-date">DATE</label>
-        <input id="todo-date" type="date">
+        <input id="todo-date" type="date" />
         <label for="todo-priority">PRIORITY</label>
         <select name="todo-priority" id="todo-priority">
           <option value="high">High</option>
@@ -49,12 +69,12 @@
           <option value="low">Low</option>
         </select>
         <section class="project-form-buttons">
-          <input type="submit" id="create-todo-btn" value="Create">
+          <input type="submit" id="create-todo-btn" value="Create" />
           <button type="button" id="close-todo-form-btn">Cancel</button>
         </section>
       </form>
     </dialog>
-    
+
     <script src="index.js"></script>
   </body>
 </html>

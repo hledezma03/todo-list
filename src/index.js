@@ -59,8 +59,12 @@ const todoApp = () => {
     deleteProject(id) {
       projects = projects.filter((project) => project.id !== id);
 
-      if (currentProject.id === id && projects.length > 0) {
-        currentProject = projects[projects.length - 1];
+      if (currentProject.id === id) {
+        if (projects.length > 0) {
+          currentProject = projects[projects.length - 1];
+        } else {
+          currentProject = null;
+        }
       }
     },
     onProjectClick(id) {
@@ -249,10 +253,15 @@ const initApp = () => {
   const refreshUI = () => {
     const projects = myApp.getProjects();
     const currentProject = myApp.getCurrentProject();
-    const activeId = currentProject.id;
-    const currentProjectTodos = currentProject.getTodos();
-    myDisplay.renderTodos(currentProjectTodos);
-    myDisplay.renderProject(projects, activeId);
+    if (currentProject) {
+      const activeId = currentProject.id;
+      const currentProjectTodos = currentProject.getTodos();
+      myDisplay.renderTodos(currentProjectTodos);
+      myDisplay.renderProject(projects, activeId);
+    } else {
+      myDisplay.renderProject(projects, null);
+      myDisplay.renderTodos([]);
+    }
   };
 
   refreshUI();

@@ -13,26 +13,55 @@
     padding: 15px;
  }
 
- .sidebar-container {
+ .sidebar {
     background-color: #333;
     color: #fff;
-    padding: 15px;
- }
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-sizing: border-box;
+   }
 
- .sidebar-title {
-   font-size: 24px;
-   margin-bottom: 12px;
- }
+.sidebar-title {
+   font-size: 1.5rem;
+   color: #ccc;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   margin-bottom: 20px;
+}
 
+.project-list-wrapper {
+   flex-grow: 1;
+   overflow-y: auto;
+}
+   
  #add-project-btn {
     background-color: #28a745;
     color: #fff;
     border: none;
-    padding: 10px;
-    cursor: pointer;
+    border-radius: 8px;
     width: 100%;
-    margin-bottom: 15px;
+    padding: 12px;
+    cursor: pointer;
+    margin-top: 20px;
     font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+ }
+
+ #add-project-btn:hover {
+   background-color: #218838;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+ }
+
+ #add-project-btn span {
+   font-size: 20px;
+   font-weight: bold;
  }
 
  #add-todo-btn {
