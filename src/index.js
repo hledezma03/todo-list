@@ -195,7 +195,7 @@ const displayController = (actions) => {
         const todoTitle = document.createElement("p");
         todoTitle.textContent = todo.title;
         const todoDate = document.createElement("p");
-        todoDate.textContent = todo.date;
+        todoDate.textContent = todo.dueDate;
         const todoPriority = document.createElement("p");
         todoPriority.textContent = todo.priority;
 
