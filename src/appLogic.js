@@ -9,14 +9,14 @@ export const todoApp = () => {
   let currentProject = defaultProject;
 
   return {
-    addProject(name) {
+    addProject: (name) => {
       const newProject = createProject(name);
       projects.push(newProject);
       currentProject = newProject;
       return currentProject;
     },
     getProjects: () => projects,
-    deleteProject(id) {
+    deleteProject: (id) => {
       projects = projects.filter((project) => project.id !== id);
 
       if (currentProject.id === id) {
@@ -27,11 +27,15 @@ export const todoApp = () => {
         }
       }
     },
-    onProjectClick(id) {
+    onProjectClick: (id) => {
       currentProject = projects.find((project) => project.id === id);
     },
     getCurrentProject: () => currentProject,
-    addTodoToCurrentProject: (todoData) => currentProject.addTodo(todoData),
+    addTodoToCurrentProject: (todoData) => {
+      if (currentProject) {
+        currentProject.addTodo(todoData);
+      }
+    },
     deleteTodo: (todoId) => currentProject.deleteTodo(todoId),
   };
 };

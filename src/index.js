@@ -32,14 +32,21 @@ const initApp = () => {
   const myDisplay = displayController(actions);
 
   const refreshUI = () => {
+    const addTodoBtn = document.getElementById("add-todo-btn")
     const projects = myApp.getProjects();
     const currentProject = myApp.getCurrentProject();
     if (currentProject) {
+      addTodoBtn.disable = false
+      addTodoBtn.style.opacity = "1"
+      addTodoBtn.style.cursor = "pointer"
       const activeId = currentProject.id;
       const currentProjectTodos = currentProject.getTodos();
       myDisplay.renderTodos(currentProjectTodos);
       myDisplay.renderProject(projects, activeId);
     } else {
+      addTodoBtn.disable = true
+      addTodoBtn.style.opacity = "0.5"
+      addTodoBtn.style.cursor = "not-allowed"
       myDisplay.renderProject(projects, null);
       myDisplay.renderTodos([]);
     }
