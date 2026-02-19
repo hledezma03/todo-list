@@ -128,6 +128,7 @@ export const displayController = (actions) => {
         //Create todo container
         const todoContainer = document.createElement("div");
         todoContainer.classList.add("todo-item");
+        todoContainer.classList.add(`priority-${todo.priority}`);
 
         const summary = document.createElement("div");
         summary.classList.add("todo-summary");
