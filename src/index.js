@@ -195,7 +195,11 @@ const displayController = (actions) => {
         const todoTitle = document.createElement("p");
         todoTitle.textContent = todo.title;
         const todoDate = document.createElement("p");
-        todoDate.textContent = todo.dueDate;
+        const dateObj = new Date(todo.dueDate)
+        todoDate.textContent = dateObj.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric'
+        });
         const todoPriority = document.createElement("p");
         todoPriority.textContent = todo.priority;
 
