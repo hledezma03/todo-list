@@ -199,7 +199,8 @@ li:hover {
 
 .delete-project-btn,
 .delete-todo-btn,
-.edit-project-btn {
+.edit-project-btn,
+.edit-todo-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -221,7 +222,8 @@ li:hover .delete-project-btn {
   border-radius: 4px;
 }
 
-.edit-project-btn:hover {
+.edit-project-btn:hover,
+.edit-todo-btn:hover {
   background-color: rgba(16, 4, 176, 0.3);
   border-radius: 4px;
 }

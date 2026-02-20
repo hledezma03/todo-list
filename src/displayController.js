@@ -190,6 +190,9 @@ export const displayController = (actions) => {
         todoPriority.classList.add("todo-priority");
         todoPriority.textContent = todo.priority;
 
+        const editTodoBtn = document.createElement("button");
+        editTodoBtn.classList.add("edit-todo-btn");
+
         const deleteTodoBtn = document.createElement("button");
         deleteTodoBtn.classList.add("delete-todo-btn");
 
@@ -198,11 +201,15 @@ export const displayController = (actions) => {
           e.stopPropagation();
           actions.deleteTodo(todo.id);
         });
+        //Edit icon
+        const iconEdit = document.createElement("img");
+        iconEdit.src = editIcon;
+        iconEdit.classList.add("edit-icon");
 
         //Trash icon
-        const icon = document.createElement("img");
-        icon.src = trashIcon;
-        icon.classList.add("trash-icon");
+        const iconTrash = document.createElement("img");
+        iconTrash.src = trashIcon;
+        iconTrash.classList.add("trash-icon");
 
         const details = document.createElement("div");
         details.classList.add("todo-details");
@@ -217,10 +224,12 @@ export const displayController = (actions) => {
         });
 
         //Appending elements
-        deleteTodoBtn.appendChild(icon);
+        editTodoBtn.appendChild(iconEdit);
+        deleteTodoBtn.appendChild(iconTrash);
         summary.appendChild(todoTitle);
         summary.appendChild(todoDate);
         summary.appendChild(todoPriority);
+        summary.appendChild(editTodoBtn);
         summary.appendChild(deleteTodoBtn);
         todoContainer.appendChild(summary);
         todoContainer.appendChild(details);
