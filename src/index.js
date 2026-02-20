@@ -15,6 +15,10 @@ const initApp = () => {
       myApp.onProjectClick(id);
       refreshUI();
     },
+    editProject(id, newName) {
+      myApp.editProject(id, newName);
+      refreshUI();
+    },
     deleteProject(id) {
       myApp.deleteProject(id);
       refreshUI();

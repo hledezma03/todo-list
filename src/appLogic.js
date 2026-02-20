@@ -16,6 +16,12 @@ export const todoApp = () => {
       return currentProject;
     },
     getProjects: () => projects,
+    editProject: (id, newName) => {
+      const project = projects.find(p => p.id === id)
+      if (project) {
+        project.name = newName
+      }
+    },
     deleteProject: (id) => {
       projects = projects.filter((project) => project.id !== id);
 

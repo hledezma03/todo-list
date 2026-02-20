@@ -78,6 +78,12 @@ main {
   position: fixed;
   bottom: 15px;
   right: 15px;
+  transition: all 0.2s ease
+}
+
+#add-todo-btn:hover {
+  background-color: #0069d9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 #project-dialog {
@@ -187,8 +193,13 @@ li:hover {
   background-color: #444;
 }
 
+.project-btns-container {
+  display: flex;
+}
+
 .delete-project-btn,
-.delete-todo-btn {
+.delete-todo-btn,
+.edit-project-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -207,7 +218,11 @@ li:hover .delete-project-btn {
 .delete-project-btn:hover,
 .delete-todo-btn:hover {
   background-color: rgba(239, 68, 68, 0.3);
-  color: #ef4444;
+  border-radius: 4px;
+}
+
+.edit-project-btn:hover {
+  background-color: rgba(16, 4, 176, 0.3);
   border-radius: 4px;
 }
 
@@ -360,11 +375,9 @@ li:hover .delete-project-btn {
   border-left: 5px solid #ef4444 !important;
 }
 
-
 .priority-medium {
   border-left: 5px solid #f59e0b !important;
 }
-
 
 .priority-low {
   border-left: 5px solid #10b981 !important;
