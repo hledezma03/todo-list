@@ -72,16 +72,28 @@ export const displayController = (actions) => {
     const todoDateInput = document.getElementById("todo-date");
     const todoPriorityInput = document.getElementById("todo-priority");
 
-    if (todoTitleInput.value.trim() !== "") {
-      actions.addTodo({
+    if (todoForm.dataset.mode === "edit") {
+      const id = parseFloat(todoForm.dataset.editId);
+      actions.editTodo(id, {
         title: todoTitleInput.value,
         description: todoDescriptionInput.value,
         dueDate: todoDateInput.value,
         priority: todoPriorityInput.value,
       });
-      todoForm.reset();
-      todoDialog.close();
+    } else {
+      if (todoTitleInput.value.trim() !== "") {
+        actions.addTodo({
+          title: todoTitleInput.value,
+          description: todoDescriptionInput.value,
+          dueDate: todoDateInput.value,
+          priority: todoPriorityInput.value,
+        });
+      }
     }
+    delete todoForm.dataset.mode;
+    delete todoForm.dataset.editId;
+    todoForm.reset();
+    todoDialog.close();
   });
 
   return {
@@ -192,6 +204,30 @@ export const displayController = (actions) => {
 
         const editTodoBtn = document.createElement("button");
         editTodoBtn.classList.add("edit-todo-btn");
+
+        //Event for editing the todo
+        editTodoBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+
+          document.querySelector("#todo-dialog h2").textContent = "Edit Todo";
+          const submitTodoBtn = document.getElementById("create-todo-btn");
+          submitTodoBtn.value = "Save Changes";
+
+          const todoTitleInput = document.getElementById("todo-title");
+          todoTitleInput.value = todo.title;
+          const todoDescriptionInput =
+            document.getElementById("todo-description");
+          todoDescriptionInput.value = todo.description;
+          const todoDueDateInput = document.getElementById("todo-date");
+          todoDueDateInput.value = todo.dueDate;
+          const todoPriorityInput = document.getElementById("todo-priority");
+          todoPriorityInput.value = todo.priority;
+
+          todoForm.dataset.mode = "edit";
+          todoForm.dataset.editId = todo.id;
+
+          todoDialog.showModal();
+        });
 
         const deleteTodoBtn = document.createElement("button");
         deleteTodoBtn.classList.add("delete-todo-btn");

@@ -17,9 +17,9 @@ export const todoApp = () => {
     },
     getProjects: () => projects,
     editProject: (id, newName) => {
-      const project = projects.find(p => p.id === id)
+      const project = projects.find((p) => p.id === id);
       if (project) {
-        project.name = newName
+        project.name = newName;
       }
     },
     deleteProject: (id) => {
@@ -40,6 +40,17 @@ export const todoApp = () => {
     addTodoToCurrentProject: (todoData) => {
       if (currentProject) {
         currentProject.addTodo(todoData);
+      }
+    },
+    editTodo: (id, newTodoData) => {
+      const todoToChange = currentProject
+        .getTodos()
+        .find((todo) => todo.id === id);
+      if (todoToChange) {
+        todoToChange.title = newTodoData.title;
+        todoToChange.description = newTodoData.description;
+        todoToChange.dueDate = newTodoData.dueDate;
+        todoToChange.priority = newTodoData.priority;
       }
     },
     deleteTodo: (todoId) => currentProject.deleteTodo(todoId),

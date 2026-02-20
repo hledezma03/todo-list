@@ -27,6 +27,10 @@ const initApp = () => {
       myApp.addTodoToCurrentProject(todoData);
       refreshUI();
     },
+    editTodo(id, newTodoData) {
+      myApp.editTodo(id, newTodoData)
+      refreshUI();
+    },
     deleteTodo(todoId) {
       myApp.deleteTodo(todoId);
       refreshUI();
