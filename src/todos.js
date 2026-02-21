@@ -21,6 +21,9 @@ export const createProject = (name) => {
   return {
     id,
     name,
+    get todosList() {
+      return todosList;
+    },
     addTodo(todoData) {
       todosList.push(createTodo(todoData));
     },

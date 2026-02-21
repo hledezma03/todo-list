@@ -1,12 +1,21 @@
 //Main controller
 import { createProject } from "./todos.js";
-export const todoApp = () => {
-  let projects = [];
-  //Create default project
-  const defaultProject = createProject("Default");
-  projects.push(defaultProject);
 
-  let currentProject = defaultProject;
+export const todoApp = (initialData = []) => {
+  let projects = initialData.map((projectData) => {
+    const project = createProject(projectData.name);
+    project.id = projectData.id;
+    projectData.todosList.forEach((todo) => project.addTodo(todo));
+    return project;
+  });
+
+  //Create default project
+  if (projects.length === 0) {
+    const defaultProject = createProject("Default");
+    projects.push(defaultProject);
+  }
+
+  let currentProject = projects[0];
 
   return {
     addProject: (name) => {
@@ -54,5 +63,8 @@ export const todoApp = () => {
       }
     },
     deleteTodo: (todoId) => currentProject.deleteTodo(todoId),
+    setProjects: (newProjects) => {
+      projects = newProjects;
+    },
   };
 };
