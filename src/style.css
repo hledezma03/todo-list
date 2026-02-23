@@ -228,6 +228,12 @@ li:hover .delete-project-btn {
   border-radius: 4px;
 }
 
+.edit-todo-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .trash-icon {
   pointer-events: none;
 }
