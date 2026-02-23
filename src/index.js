@@ -35,6 +35,11 @@ const initApp = () => {
       save();
       refreshUI();
     },
+    toggleTodo: (id) => {
+      myApp.toggleTodoChecklist(id);
+      save();
+      refreshUI();
+    },
     editTodo(id, newTodoData) {
       myApp.editTodo(id, newTodoData);
       save();

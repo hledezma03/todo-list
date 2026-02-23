@@ -205,8 +205,28 @@ export const displayController = (actions) => {
         const editTodoBtn = document.createElement("button");
         editTodoBtn.classList.add("edit-todo-btn");
 
+        //Event for toggling the checklist
+        const checkBtn = document.createElement("button");
+        checkBtn.classList.add("check-todo-btn");
+        if (todo.checklist) {
+          checkBtn.classList.add("is-completed");
+          todoContainer.classList.add("todo-completed");
+        }
+
+        checkBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          actions.toggleTodo(todo.id);
+        });
+
         //Event for editing the todo
+        if (todo.checklist) {
+          editTodoBtn.disabled = true;
+          editTodoBtn.classList.add("disabled");
+        }
+
         editTodoBtn.addEventListener("click", (e) => {
+          if (todo.checklist) return;
+          
           e.stopPropagation();
 
           document.querySelector("#todo-dialog h2").textContent = "Edit Todo";
@@ -262,6 +282,7 @@ export const displayController = (actions) => {
         //Appending elements
         editTodoBtn.appendChild(iconEdit);
         deleteTodoBtn.appendChild(iconTrash);
+        summary.prepend(checkBtn);
         summary.appendChild(todoTitle);
         summary.appendChild(todoDate);
         summary.appendChild(todoPriority);

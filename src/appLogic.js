@@ -62,6 +62,12 @@ export const todoApp = (initialData = []) => {
         todoToChange.priority = newTodoData.priority;
       }
     },
+    toggleTodoChecklist: (todoId) => {
+      const todo = currentProject.getTodos().find((t) => t.id === todoId);
+      if (todo) {
+        todo.checklist = !todo.checklist;
+      }
+    },
     deleteTodo: (todoId) => currentProject.deleteTodo(todoId),
     setProjects: (newProjects) => {
       projects = newProjects;

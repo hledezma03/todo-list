@@ -384,3 +384,35 @@ li:hover .delete-project-btn {
 .priority-low {
   border-left: 5px solid #10b981 !important;
 }
+
+.check-todo-btn {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #28a745;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+} 
+
+.check-todo-btn.is-completed {
+  background-color: #28a745;
+  border-color: #28a745;
+  position: relative;
+}
+
+.check-todo-btn.is-completed::after {
+  content: '✔';
+  font-size: 12px;
+  color: white;
+  display: block;
+}
+
+.todo-item.todo-completed {
+  opacity: 0.6;
+}
+
+.todo-item.todo-completed .todo-title {
+  text-decoration: line-through;
+  color: #888;
+}
